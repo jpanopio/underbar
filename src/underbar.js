@@ -300,6 +300,24 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var storeArgs = {};
+    var result;
+    return function() {
+      var key = "";
+      for (var i = 0; i < arguments.length; i++) {
+        key += String(arguments[i]);
+        if (i < arguments.length - 1)
+          key += " ";
+      }
+      if ((key in storeArgs)) {
+        result = storeArgs[key];
+      }
+      else {
+        result = func.apply(this, arguments);
+        storeArgs[key] = arguments;
+      }
+      return result;
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
