@@ -207,16 +207,17 @@
     if (iterator == undefined) {
       iterator = Boolean;
     }
-    var pass = false;
+    var foundMatch = false;
     if (collection == false)
       return false;
     else {
-      return _.every(collection, function(value) {
+      var toPass = _.every(collection, function(value) {
         if (iterator(value) || Boolean(iterator(value))) {
-          pass = true;
+          foundMatch = true;
         }
-        return pass;
+        return foundMatch;
       });
+      return (foundMatch || toPass);
     }
   };
 
